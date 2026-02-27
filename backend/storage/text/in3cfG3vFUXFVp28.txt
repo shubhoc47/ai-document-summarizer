@@ -1,0 +1,278 @@
+University of Wollongong  
+ 
+Edge -Based Federated Learning for Bandwidth -
+Efficient Wildlife and Bushfire Monitoring in Remote 
+Australian Environments  
+ 
+ 
+Research Proposal — Master of Research (IT / Computer 
+Science)  
+ 
+ 
+Candidate:  Shubho Chowdhury  
+Intended Degree:  Master of Research  
+Discipline / Area:  Artificial Intelligence, Edge Computing, 
+Federated Learning  
+Proposed Supervisors:  (To be confirmed)  
+Date:  January  202 6
+
+Table of Contents  
+ 
+1. Introduction / Background  
+2. Research Questions  
+2.1 Primary Research Question  
+2.2 Secondary Research Questions  
+3. Purpose and Aims  
+3.1 Overall Purpose  
+3.2 Specific Aims  
+4. Significance  
+5. Literature Review  
+5.1 Wildlife Monitoring  
+5.2 Bushfire Detection  
+5.3 Federated Learning Algorithms  
+5.4 Edge AI and Communication Constraints  
+6. Methodology  
+6.1 Architecture  
+6.2 Simulation  
+6.3 Algorithm Evaluation  
+6.4 Edge Hardware Testing  
+6.5 Ethical and Compliance Considerations  
+7. Timeline  
+8. Expected Outcomes  
+9. Conclusion  
+10. References
+
+Introduction/Background  
+Australia's unique biodiversity boasts 80% of its mammals and 90% of its reptiles as 
+endemic, but many species are increasingly endangered by habitat loss, invasive predators, 
+and extreme bushfire events. The infamous 2019 -2020 “Black Summer” bushfires kil led or 
+displaced an estimated three billion animals (WWF Australia, 2020). One outcome of this 
+tragedy is a heightened awareness of the need for effective, real -time environmental 
+monitoring of Australia's extensive remote regions. Current approaches are i nadequate: 
+wildlife surveys have a low frequency and are labor -intensive while remote camera traps 
+generate extensive image data with around 90% being trigger images without the target 
+wildlife (Bruce et al., 2025). Sending high -resolution images from the outback via satellite is 
+prohibitively expensive (in the order of hundreds of dollars per gigabyte) while physically 
+retrieving data (e.g. memory card swapping) introduces delays of weeks. These limitations 
+on data processing capability prevent timely reac tions to invasive predators, endangered 
+species decline or ignitions of new bushfires.  
+Bushfire monitoring in remote areas relies on public detection or sporadic satellite image 
+capture so small ignitions go undetected until they grow large. Thus, real -time monitoring in 
+remote Australia is lacking and represents a critical detection gap. Ex isting systems of 
+detection warning are in need of fundamental redesign to facilitate real -time monitoring that 
+is bandwidth efficient even when operating with low connectivity. Edge computing and 
+federated learning provides an ideal basis for a solution ( Miller et al., 2025). Based on this 
+background, the research question guiding this project proposes a hierarchical, edge -based 
+federated learning solution for accurate, low -bandwidth wildlife monitoring and bushfire 
+detection in remote Australian regions . 
+Research Questions  
+Primary Research Question:  How can a top -down, edge -based, federated learning 
+architecture be designed to provide accurate wildlife and bushfire detection for bandwidth -
+limited, privacy -preserving, remote Australian environments?  
+Secondary Research Questions:  
+• How effectively can a hierarchical aggregation scheme and non -IID–aware FL 
+algorithms (e.g. FedProx) mitigate model divergence caused by heterogeneous 
+ecological data?  
+• What trade -offs exist between detection accuracy, energy consumption, and 
+thermal stability when deploying lightweight computer vision models on edge 
+hardware?  
+• To what extent can a hierarchical FL approach reduce satellite data transmission 
+costs compared to a centralized model?
+
+• How can the federated learning system design align with the CARE Principles for 
+Indigenous Data Governance?  
+Purpose & Aims  
+The proposed research seeks to create, develop and test a decentralised intelligent remote 
+monitoring system for environmental observation. The system will decentralise passive 
+remote sensors and turn them into intelligent agents that operate independently  and in the 
+peer -to-peer network to collaboratively improve their models for real -time wildlife (e.g. 
+identifying a wallaby instead of a feral cat) and early bushfire detection, without human 
+intervention, data being sent, or raw data uploads. By using on -device federated learning, it 
+would minimize communication expenses without significantly decreasing detection 
+accuracy for wildlife and bushfire events of interest . Such need directly addresses 
+Australia's need for remote sensing systems that can detect wildlife threats quickly and 
+provide early bushfire alerts in an area where connectivity is often poor or non -existent . 
+Specific Aims:  
+• Design  a hierarchical federated learning architecture combining edge devices, 
+regional gateway aggregators, and a cloud coordinator.  
+• Optimize  lightweight computer vision models (e.g. YOLO variants) for on -device 
+inference and federated training.  
+• Evaluate  bandwidth usage, model accuracy, and energy efficiency through a 
+simulation -based “digital twin” of remote deployments.  
+• Ensure  ethical data governance by keeping raw ecological data local (aligning with 
+Indigenous data sovereignty principles).  
+Significance  
+Proposed edge -based FL will also better minimize response times to biodiversity and fire 
+threats than current systems. Where (human) data collection weeks later reveals a problem, 
+field camera traps can alert park managers to invasive predators or small fi res before they've 
+had a chance to spread. Moreover, such information can prevent biodiversity losses and 
+small, smoldering efforts from becoming raging infernos. This is possible because FL 
+minimizes the need for proactive, constant monitoring over large,  remote spans. Thus, this 
+project, in particular, supports national conservation efforts, such as Australia's Threatened 
+Species Action Plan 2022 -2032 . 
+Technically, it overcomes longstanding remote monitoring challenges of connection and 
+cost. For image data to be sent to satellites to be processed is expensive and currently 
+applicable to only small -scale camera networks. Federated learning requires less 
+communication, as it sends only model updates instead of raw data, which saves in 
+bandwidth usage and preserves detection capabilities. This means camera networks can be 
+solar or battery powered - low-energy requirements - where Green AI taught low -carbon
+
+computing allows massive sensor networks to be privacy -preserving and achievable with 
+efficient practices.  
+Finally, strategically, everyone is connected for AI training but the data does not leave the 
+camera to which it is sent and processed, meaning existing environmental data networks 
+(TERN, Atlas of Living Australia) can compile data without central database  weaknesses. 
+Utilizing CARE Principles for Indigenous Data Governance means that Indigenous data 
+sovereignty is respected, limiting privacy violations  (Carroll, S. et al. , 2020 ). Therefore, this 
+study validates a feasible solution to ethical scaling with federated edge computing AI for 
+both federated edge computing and conservation in difficult field settings.  
+ 
+Literature Review  
+Wildlife Monitoring:  Camera trap investigations across Australia create massive image 
+libraries, but due to the fact that up to ~90% of images are null (false trigger) data, sifting 
+through the desired research data becomes cumbersome (Bruce et al., 2025). Deep learning 
+has tr ansformed automated species identification to the level of human efficacy —if not 
+better—but most applications involve cloud -based processing. This does not align with 
+researchers operating in remote regions with low bandwidth (Mulero -Pázmány et al., 2025). 
+Thus, this article investigates whether there are any methods to resolve the issues of onsite 
+identification and null data filtration instead of sending null images to the cloud for 
+processing.  
+Bushfire Detection:  The same issue arises for bushfire detection. Ground sensors are not 
+highly sensitive enough to detect small ignitions far away in country or rural areas, forests. 
+The most recent application of IoT sensor networks with federated learning for decentralized  
+fire detection networks suggests that decentralized awareness options will help with 
+timeliness of detection (Abdul Salam et al., 2025). Yet much of the literature suggests 
+wildfires or wildlife independently and under connected, low f requency opportunities. This 
+paper builds off the literature by simultaneously detecting wildlife and fire in one federated 
+system as the approach taken to federated learning in the literature review only connects 
+for different levels of data collection by  means of low -bandwidth, and was tailored for 
+specific situations.  
+Federated Learning Algorithms:  However, typical FL algorithms are not reliable in the face 
+of non -IID client data and communication limitations. For instance, sensor data across 
+regions are often extremely heterogeneous which is causative for client drift and reduced 
+convergence speed ( Xia et al., 2021; Jimenez et al., 2024). For instance, FedProx  uses a term 
+of regularization to better fit data differences and a series of methods of update 
+compression (sparse gradients or quantized gradient transmission) a re applied to reduce 
+the amount of communication needed. Thus, we will build off of these findings through the 
+use of a hierarchical FL system and algorithms that are otherwise stable under non -IID 
+conditions to stabilize models in spite of real -world disc repancies.
+
+Edge AI and Communication Constraints:  With edge AI developments, small -sized vision 
+models with low -latency performance run even on low -power processors. For instance, 
+YOLO -Nano is an object detector usable for fast inference in embedded devices with decent 
+performance accuracy (Wong et al., 2 019). However, little is known about the performance 
+of such models within a federated learning system for complicated classes in the field with 
+real -world constraints. Furthermore, remote sensors operate using long -distance wireless 
+connections (LoRaWAN, for example) that have extremely low data rates, meaning extreme 
+bandwidth preservation is needed. For example, previous work establishes that a 
+hierarchical FL framework using intermediate aggregation entities (regio nal gateways) 
+assists in significantly lowering the backhaul communication volume. These results are part 
+of the justification for our system architecture, which fuses multiple levels of model 
+aggregations and aggressive communication compression to suit l ow-bandwidth scenarios.  
+ 
+Methodology  
+Architecture:  We will implement a hierarchical federated learning  framework on edge 
+devices for data generation, gateway aggregators for an intermediary (but still localized 
+approach) and a cloud coordinator. This decentralized framework stems from theoretical 
+explanations behind federated learning to alleviate communic ation limitations and non -IID 
+data complications. Empirical system performance will be assessed via FL conventional 
+metrics of success: model accuracy, speed of convergence, and communication overhead. 
+In addition, the CARE Principles support an ethically sound system since the onset is that, 
+due to the nature of the information, raw data will not leave the localized device. Therefore, 
+this system supports high privacy requirements and IDC regulations.  
+ 
+Simulation:  The research will mainly be evaluated through simulation with the Flower FL 
+framework. A simulated "digital twin"  of the sensor network will mirror the many virtual edge 
+clients and federated learning experience. We will simulate the existing datasets (ex. wildlife 
+images) into realistic, non -IID distributions by splitting datasets (Dirichlet -based splits will 
+skew d ata amongst clients). The simulated network will be modified to accommodate the 
+situations of the LoRaWAN connectivity —compromised bandwidth, increased latency —so 
+that we can uniformly assess performance under differently heterogeneous data, variable 
+numbers of nodes, and compromised network integrity.  
+ 
+Algorithm Evaluation:  We will implement and evaluate federated learning methods: the 
+baseline FedAvg algorithm, FedProx (to ensure better convergence in non -IID scenarios) and 
+a federated hierarchical FL with intermediate aggregation at the gateway nodes. We will also 
+implement  communication -efficient approaches, like gradient compression or update 
+sparsification to reduce the required bandwidth. We will evaluate model performance of
+
+each method based on accuracy, stability of training convergence and a data sent to assess 
+the cost of accuracy versus efficiency.  
+Edge Hardware Testing:  In order to  test the system performance in realistic, operating 
+conditions, we will deploy trained models on real edge hardware representative of the field 
+devices (e.g. Raspberry Pi 5; NVIDIA Jetson Orin Nano) and measure inference latency, 
+power consumption, and te mperature management for extended, uninterrupted use on 
+such devices. These findings will highlight constraints of the hardware (overheating, 
+excessive draw of voltages, etc.) and inform us of necessary changes to the model in order 
+for the solution to be feasible in a solar, off -grid powered setting.  
+Ethical & Compliance:  The nature of the project is that all unprocessed sensor data 
+remains on the local devices so no privacy concerns exist and Indigenous data sovereignty 
+is upheld (no sensitive ecological data will ever leave the local device to go to a general, 
+centralized  server). Therefore, the very nature of our approach facilitates ethical data 
+governance with standards like the CARE Principles. In addition, no wildlife or human 
+intervention is planned as we will be using existing datasets for trai ning and simulations —
+any future implementation in the field will apply for prior ethical approval.  
+Timeline  
+ 
+Figure:  Gantt chart of the two -year research in accordance with the Master by Research 
+arrangement.  
+The project is split into 4 terms with a vacation break at the end of term 2. The first term is 
+dedicated to the literature review, refinement of research questions, preparation of the 
+dataset and construction of the hierarchical federated learning archite cture; the second 
+term is dedicated to federated learning framework construction for initial experiments and 
+baseline experiments; the vacation break acts to minimize experiments related to the
+
+research and allows for light reading, documentation and reconsideration of the project's 
+scope. The project resumes in the third term with adjustment of performance tuning based 
+on the algorithm, non -IID performance and system evaluation. Finally, the fou rth term is 
+dedicated to final experiments, thesis writing, article writing, revisions and submission . 
+Expected Outcomes  
+By the conclusion of this project, we expect to deliver the following outcomes:  
+• An empirically validated hierarchical federated learning framework  for low -
+bandwidth wildlife and bushfire monitoring because of  a series of 
+prototypes/simulations.  
+• Qualitative findings (experimental results) that statistically reduce transmission 
+and energy expenditure  relative to a centralized equivalent with statistical 
+significance . 
+• Real -world implications for AI deployed ethically and data -sovereign  in ecological 
+monitoring (i.e. proposed solutions are privacy -preserving and compliant with 
+Indigenous data rights).  
+• Completed Master's thesis  on the topic and at least one other peer -reviewed 
+publication of findings.  
+Conclusion  
+This project proposes a realistic and ethical federated learning solution for wildlife and 
+bushfire remote sensing. As edge intelligence with an ethical stance toward data privacy, 
+this research will contribute a practical system for low -connectivity envir onments and 
+valuable results to the fields of conservation and federated learning literature.
+
+References  
+Abdul Salam, M., Badr, E., & Elbohoty, A., 2025. Mayfly -based federated learning approach 
+for early detection of fire . International Journal of Data Science and Analytics , 20(8): 
+7167–7187.  
+ 
+Bruce, T. et al. , 2025. Large -scale and long -term wildlife research and monitoring using 
+camera traps: a continental synthesis . Biological Reviews , 100(2): 530 –555.  
+ 
+Carroll, S. et al. , 2020. The CARE Principles for Indigenous Data Governance . Data 
+Science Journal , 19: 43.  
+ 
+Jimenez G., D.M. et al. , 2024. Non -IID Data in Federated Learning: A Systematic Review 
+with Taxonomy, Metrics, Methods, Frameworks and Future Directions . arXiv preprint , 
+2024.  
+ 
+Miller, T. et al. , 2025. Federated Learning for Environmental Monitoring: A Review of 
+Applications, Challenges, and Future Directions . Sensors (MDPI) . 
+ 
+Mulero -Pázmány, M. et al. , 2025. Addressing significant challenges for animal detection in 
+camera trap images: a novel deep learning -based approach . Scientific Reports , 15(1): 
+16191.  
+ 
+Wong, A. et al. , 2019. YOLO Nano: a highly compact “You Only Look Once” convolutional 
+neural network for object detection . In Proc. 5th Workshop on Energy Efficient Machine 
+Learning (NeurIPS 2019) , pp. 22–25. IEEE.  
+ 
+WWF Australia, 2020. After the catastrophe: Report on wildlife losses from the 2019 –2020 
+bushfires . WWF Australia Report . 
+ 
+Xia, Q. et al. , 2021. A survey of federated learning for edge computing: Research problems 
+and solutions . High -Confidence Computing , 1(1): 100008.

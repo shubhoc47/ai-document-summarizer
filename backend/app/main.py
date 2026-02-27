@@ -7,6 +7,7 @@ from .utils import generate_document_id, ensure_dir
 from .config import settings
 from pydantic import BaseModel
 from .pdf_utils import extract_text_from_pdf
+from .llm_service import summarize_text
 
 logger = logging.getLogger("app")
 
@@ -14,6 +15,8 @@ class ExtractRequest(BaseModel):
     document_id: str
     max_pages: int = 30
 
+class SummarizeRequest(BaseModel):
+    document_id: str
 
 def create_app() -> FastAPI:
     app = FastAPI(title=settings.APP_NAME)
@@ -89,6 +92,29 @@ def create_app() -> FastAPI:
             "pages_processed": pages_processed,
             "text_length": len(text),
             "preview": text[:1200],
+        }
+    
+    @app.post(f"{settings.API_PREFIX}/summarize")
+    async def summarize(req: SummarizeRequest):
+        text_path = Path("storage/text") / f"{req.document_id}.txt"
+        if not text_path.exists():
+            raise HTTPException(
+                status_code=400,
+                detail="Text not found. Run /api/extract first for this document_id.",
+            )
+
+        text = text_path.read_text(encoding="utf-8").strip()
+        if not text:
+            raise HTTPException(status_code=400, detail="Extracted text is empty.")
+
+        try:
+            summary = await summarize_text(text)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+        return {
+            "document_id": req.document_id,
+            "summary": summary,
         }
 
     return app

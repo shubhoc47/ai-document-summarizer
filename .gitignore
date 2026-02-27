@@ -1,0 +1,28 @@
+# Node
+frontend/node_modules
+frontend/dist
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+backend/.env
+frontend/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Storage (uploaded PDFs & vector indexes)
+backend/storage/uploads/*
+backend/storage/index/*
+!backend/storage/uploads/.keep
+!backend/storage/index/.keep
