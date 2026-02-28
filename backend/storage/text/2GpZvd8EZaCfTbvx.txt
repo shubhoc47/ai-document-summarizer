@@ -1,0 +1,242 @@
+Deep research shortlist: choosing seven stocks
+from your screenshots
+Scope and important caveats
+You asked for a research-based way to select  7 companies  from the two screenshots (24 companies
+total) and to explain both : why the seven were chosen, and why the others were not.
+This is general investment research , not personal financial advice. The right shortlist depends on your
+full situation (emergency fund, debt, time horizon, job stability, whether you already hold broad ETFs,
+etc.). Where I make judgement calls (for example, “too cyclical” or “too much regulatory risk”), those are
+risk-management preferences —not predictions.
+Because you’re investing from Australia  into mostly US-listed equities, your result in A$ can be
+meaningfully affected by currency movements  (AUD/USD can amplify or reduce returns).  If you
+hold US stocks that pay dividends, the common workflow for many brokers is to use a W‑8BEN so that
+dividend withholding reflects the treaty rate (often discussed as 15%  for Australian tax residents when
+properly documented, instead of a default higher rate). 
+Selection framework and market context
+I screened the 24 companies using a “ core-growth shortlist ” lens—aiming for a set of seven that can
+be held for years with a sensible balance of:
+Durable business models  with clear customer value and evidence of execution (financial results,
+backlog/order visibility, repeatable economics).
+Profitability and cash generation  (or a credible path to it that’s already visible in reported
+numbers).
+Diversification of drivers  (so one single policy decision, single product, or a single country/
+regulatory environment is less likely to dominate outcomes).
+Avoiding “binary” risk  where one event can halve the investment (common in single-asset
+biopharma, catastrophe-heavy insurers, or geopolitically sensitive ADRs).
+Diversification does not eliminate risk, but it can reduce idiosyncratic risk  (the risk of a single company
+blowing up the portfolio). 
+Seven stocks selected and rationale
+Below are the seven I would prioritise  from your list , with emphasis on  recent trend ,  multi-year
+operating performance , and “what would have to stay true” for the thesis to work.
+Comfort Systems USA  (FIX)
+This is a mechanical and electrical contracting business (HVAC and related services) that has recently
+shown unusually strong operating momentum and backlog expansion. In full-year 2025 it reported
+$9.10bn revenue  (up from $7.03bn in 2024) and $1.02bn net income  (up from $522m), with operating1
+2
+3
+• 
+• 
+• 
+• 
+4
+5
+1
+
+cash  flow  also  above  $1bn.   The  most  important  “trend”  metric  here  is  backlog :  it  reported
+$11.94bn  backlog  at  31  Dec  2025  versus  $5.99bn  a  year  earlier  (same-store  backlog  $11.58bn  vs
+$5.99bn).  That backlog surge indicates unusually strong near-term demand visibility (though it can
+still be cyclical). Market commentary in early 2026 frames much of the strength as tied to the build-out
+of AI/data-centre and related infrastructure, which has helped several “picks-and-shovels” contractors
+outperform. 
+Why it made the cut: among your industrial names, this has one of the clearest “evidence-based”
+demand signals (backlog + cash flow + profit expansion). 
+Kinsale Capital  (KNSL)
+This is a property & casualty insurer focused exclusively on the US excess and surplus (E&S)  market
+(hard-to-place risks, placed via brokers).  In 2025 it reported $503.6m net income  (vs $414.8m in
+2024),  $1.6bn net written premiums  (up 9.4%), and a  75.9% combined ratio  for the year (71.7% in
+Q4).   A combined ratio below 100% is widely used to indicate underwriting profitability (before
+investment income). 
+Why it made the cut: in your insurance cluster , this appears “best-in-class” on underwriting profitability
+metrics and has a clearly defined niche (E&S) described in its filings.   The main watch-out is that
+competition  and  pricing  conditions  can  change  over  cycles  (noted  in  its  own  disclosures  and
+commentary). 
+Monolithic Power Systems  (MPWR)
+This is a power-semiconductor company focused on energy-efficient power management solutions. 
+For 2025 it reported $2.8bn revenue , up 26.4%  versus 2024, with gross margin roughly mid‑55%  and
+materially higher operating income versus 2024.  The company has been explicitly associated with
+power-control  modules  used  in  AI/data-centre  build-outs  in  prior  reporting  and  coverage,  and
+management’s commentary shows end-market growth across multiple verticals (reducing single-market
+dependence). 
+Why it made the cut: among your “tech-ish” names, this one combines (a) a clear product category with
+structural tailwinds (power efficiency), and (b) strong, recent full-year growth shown in the company’s
+own earnings materials. 
+First Solar  (FSLR)
+This is a US-headquartered solar technology and manufacturing company, positioned as a domestic
+manufacturing alternative in utility-scale solar .   In Q3 2025 it reported  $1.6bn net sales , record
+volume sold (5.3 GW), and a contracted sales backlog of 53.7 GW  valued at $16.4bn  (as of 30 Sept 2025),
+alongside a  net cash  position cited at  $1.5bn .   The key “trend” indicator is that backlog/booking
+engine—because it drives multi-year revenue visibility in a manufacturing business. But it has also
+shown that backlog can change: Reuters reported it lowered full-year sales/volume guidance due to
+reduced  international  volumes  and  customer  terminations,  and  noted  backlog  reduction  tied  to  a
+contract dispute (including litigation context). 
+Why it made the cut: it gives your shortlist exposure to an energy transition theme with unusually
+visible order-book disclosures, while reported liquidity appears strong relative to many cyclicals. 
+Halozyme Therapeutics  (HALO)
+This one is structurally different from “single drug” biotechs. It commercialises and licenses an enzyme-
+based drug delivery platform (ENHANZE/rHuPH20) that enables subcutaneous delivery and generates
+royalty revenue tied to partner product sales.  In full-year 2025 it reported $1.397bn total revenue
+(+38% YoY) and $868m royalty revenue  (+52% YoY), and reiterated 2026 guidance for $1.71–$1.81bn
+revenue  and $1.13–$1.17bn royalties . 
+Why it made the cut: among your healthcare names, this has a more “platform/royalty” profile (multiple6
+6
+7
+8
+9
+10
+11
+12
+13
+11
+14
+15
+16
+17
+18
+19
+20
+20
+21
+20
+22
+23
+24
+2
+
+products/partners  can  contribute)  rather  than  being  dominated  by  a  single  clinical  readout.  The
+company’s own guidance frames continued growth driven by ENHANZE royalties. 
+UFP Technologies  (UFPT)
+This is a contract development and manufacturing organisation (CDMO) specialising in  single-use /
+single-patient medical devices  and components—a part of the medtech supply chain that can benefit
+from outsourcing and programme wins (including robotic surgery components).   In Q3 2025 it
+reported  $154.6m sales  (up from $145.2m), and year-to-date sales  $453.9m  (up from $360.4m), with
+commentary  pointing  to  programme  transfers,  robotic-surgery  launches  expected  to  drive  2026
+revenue, and an acquisition-led expansion strategy. 
+Why it made the cut: it diversifies your shortlist away from pure “macro” cyclicals and away from binary
+biotech  risk,  while  still  showing  strong  recent  revenue  momentum  and  a  defined  pipeline  of
+programme ramps (a tangible “trend” to monitor quarter to quarter). 
+Powell Industries  (POWL)
+This is an electrical equipment and systems company focused on the management/control/distribution
+of electrical energy—exposed to grid, industrial electrification, and reliability upgrades.   In fiscal
+2025 it reported $1.1bn revenue  (+9%), $181m net income  (+21%), and $1.4bn backlog  at year end
+(Sept  30,  2025),  plus  strong  gross  margin  levels  (~29%  for  the  year).   Management  explicitly
+highlighted encouraging customer activity in the data-centre  market as opportunities grow in size and
+volume, which is notable because it connects the company’s offering to a powerful capex cycle beyond
+traditional oil & gas.   Subsequent filings also referenced backlog increases into late 2025 (record
+backlog cited as of Dec 31, 2025 in an 8‑K excerpted source). 
+Why it made the cut: within your industrial set, this offers a credible “electrification + infrastructure
+capex” angle with strong recent profitability and backlog support, while still being understandable and
+monitorable through orders/backlog disclosures. 
+Why the other stocks were not selected
+The following companies can still succeed, but they did not make the “top seven” for a  core-growth
+shortlist  because their risk profiles are (in my view) either more binary , more geopolitically exposed , 
+more  catastrophe‑tailed ,  or  more  dependent  on  one  variable  (commodity  pricing,  licensing
+catch‑ups, one product).
+China ADR and regulatory/geopolitical exposure
+Full Truck Alliance  reported Q3 2025 revenue growth (RMB3,358m total net revenues, +10.8% YoY)
+driven  by  transaction  services,  but  this  is  still  a  China-based  platform  business  with  governance/
+geopolitical layers that can matter for foreign holders; Reuters has also reported discussion of a second
+listing outside the US as part of risk management.   Kanzhun  (BOSS Zhipin) posted Q3 2025
+revenue growth (RMB2,163m, +13.2% YoY), but it shares the broader “China platform” risk bucket where
+regulatory  and  macro  conditions  can  dominate  equity  outcomes.   China  is  central  to  both
+theses, which increases single-country exposure. 
+High-beta consumer-credit fintech
+NU Holdings  is operationally impressive (Q3 2025: 127m customers; >$4bn revenue; $783m net
+income) and has been framed by Reuters as producing record profitability and strong ROE, but it
+remains materially exposed to credit cycles, funding conditions, and macro/currency dynamics typical of
+consumer lending.  Sezzle  has shown very rapid growth and improving profitability in reported
+periods (for example, revenue growth and EBITDA expansion cited in an earnings summary), but BNPL
+models are typically more sensitive to consumer stress and competitive pricing pressure, which makes25
+26
+27
+28
+28
+29
+30
+30
+30
+31
+32
+33
+34 35
+36 37
+38
+39
+40 41
+3
+
+it higher-volatility than what I would put into a “core seven” unless you explicitly want a high-risk/high-
+upside allocation. 
+Additional insurers where risk concentration is harder to justify versus one “best-in-class” pick
+Palomar  delivered very strong 2025 profitability and premium growth (for example, 2025 gross
+written  premiums  $2.0bn  and  combined  ratio  76.9%),  but  parts  of  its  book  relate  to  catastrophe-
+sensitive specialty property lines that can produce “tail risk” outcomes.  Skyward Specialty Insurance
+Group  showed Q4 2025 revenue growth and a combined ratio around 88.5% in a widely circulated
+metrics recap, but it has a shorter public-market operating history than the top pick in this space and
+therefore  less  “through-cycle”  evidence.   Hamilton  Insurance  Group  reported  record  2025
+earnings  with  a  92.9%  combined  ratio  and  strong  book  value  growth,  but  reinsurance  and  global
+specialty property books can be more exposed to large-loss years than E&S small commercial focus. 
+HCI Group  is explicitly Florida-based in its core insurance activity per its filing, which increases
+hurricane/regulatory concentration (even with reinsurance). 
+Single-product or binary-event biopharma risk
+Krystal Biotech  has shown strong commercial traction (with full-year 2025 revenue reported at
+~$389m in a recent summary and filings emphasising dependence on VYJUVEK cash generation), but
+this remains closer to a “single franchise” risk profile than the platform/royalty structure of my selected
+name.   Catalyst  Pharmaceuticals  has  grown  revenues  across  product  lines  (annual  report
+discusses growth drivers including AGAMREE commercialisation and FIRDAPSE growth), yet company
+filings have also indicated that product revenue concentration is a key feature of the model—still more
+idiosyncratic than I want for a core seven.  Harmony Biosciences  disclosed in its 10‑K that 2024
+net product revenue related to WAKIX was $714.7m—again highlighting that one product is central
+even as the pipeline expands.   Corcept Therapeutics  shows why binary risk matters: Reuters
+reported the U.S. Food and Drug Administration  declined to approve relacorilant for a Cushing-
+related indication at the end of 2025, driving a very sharp share price move, while filings also stress
+dependence on Korlym revenue. 
+Commodity/food businesses where one external variable dominates outcomes
+Cal-Maine Foods  produced extraordinary fiscal 2025 profits (net income ~$1.2bn) driven largely by
+egg  pricing  and  demand,  but  it  has  also  confirmed  a  U.S.  Department  of  Justice  antitrust
+investigation into egg price increases—these are not the kinds of “steady compounding” characteristics
+I prioritise for a core seven.   Vital Farms  has built a strong brand and exceeded $600m net
+revenue in 2024 with a stated $1bn sales target by 2027, but it disclosed a  material weakness  in
+internal controls in its 2024 annual report and has also navigated tariff/cost-related pricing pressures—
+governance plus margin sensitivity pushed it outside the top list for now. 
+Business-model complexity or lumpy revenue recognition
+Hamilton Lane  reported fiscal 2025 results including $138bn AUM and growth in management and
+advisory fees, but the Financial Times has scrutinised aspects of the firm’s private-assets fund valuation
+practices and fee structure changes (“NAV squeezing”/unrealised gains), which increases complexity and
+reputational/governance risk for a simple seven-stock basket.   InterDigital  explicitly derives
+revenue primarily from licensing patented innovations, and its reported results can include “catch-up”
+revenue,  which  makes  forecasting  more  idiosyncratic  than  operating  businesses  with  steady  unit
+economics.  Argan  has meaningful backlog disclosures (over $1.3bn backlog at Jan 31, 2025) and
+large project wins, but EPC/project businesses are inherently lumpy and can be sensitive to project
+timing and execution in ways that can surprise investors. 42
+43
+44
+45
+46 47
+48
+49
+50
+51
+52 53
+54 55
+56 57
+58
+59
+60
+61
+62 63
+64
+65
+66 67
+68 69
+70
+4

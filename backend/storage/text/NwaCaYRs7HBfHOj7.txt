@@ -1,0 +1,81 @@
+Shubho Chowdhury
+Sydney, NSW, Australia
+0426 110 830
+shubhoc47@gmail.com
+linkedin.com/in/shubho-chowdhury-54137218a
+github.com/shubhoc47
+Career Profile
+•Software Engineer with hands-on experience designing scalable backend systems and AI-driven
+applications.
+•Improved automation reliability by 80% at Beam Broadband through system optimisation and
+API integration.
+•Designed microservice architectures using Spring Boot and Python for AI-powered document
+processing.
+•Published Q1-ranked research and developed federated learning models achieving AUC ¿ 0.97.
+•Strong analytical problem-solver with 1000+ coding problems solved across competitive platforms.
+Education
+Master of Information Technology2024 – 2025
+Central Queensland University, Sydney
+Focus: Software Development and Machine Learning
+Bachelor of Information Technology2019 – 2023
+University of Information Technology and Sciences (UITS), Dhaka
+Relevant Experience
+Software EngineerSep 2025 – Present
+Beam Broadband Pty Ltd, Sydney
+•Monitored and optimised a zero-touch customer onboarding system, increasing workflow reliability
+by 80%.
+•Engineered automated Stripe payment integrations into UCRM billing platform, ensuring 100%
+financial data accuracy.
+•Developed real-time API integration between Xero and UCRM, automating invoice synchronisa-
+tion.
+•Reduced operational workflow complexity, lowering platform costs and improving system effi-
+ciency.
+Automation & Software Engineer (Intern)Jul 2025 – Sep 2025
+Beam Broadband Pty Ltd, Sydney
+•Architected workflow automation integrating Wix, Stripe, and UISP using Make.com orchestra-
+tion.
+•Developed custom JavaScript (Velo) logic enabling secure frontend-to-backend API communica-
+tion.
+•Built Python services interfacing with external REST APIs to automate business processes.
+•Implemented responsive customer portal supporting real-time account management.
+Junior Software EngineerJul 2023 – Jan 2024
+REEA Digital Limited, Dhaka
+•Designed and trained YOLOv5 image segmentation models, improving accuracy from 85% to
+97%.
+•Integrated LangChain to enhance NLP capabilities within AI-driven systems.
+•Contributed to machine learning proof-of-concept projects using Stable Diffusion and ComfyUI.
+Relevant Projects
+Expense-Vision: AI Receipt & Expense Tracker
+
+•Built secure full-stack application using Spring Boot, Spring Security, REST APIs, and MySQL.
+•Developed Python AI microservice leveraging multimodal models for OCR and receipt data ex-
+traction.
+•Implemented scalable backend architecture with secure authentication and data persistence.
+NeuraRead: AI Document Summarization Service
+•Designed REST-based PDF summarization service using Spring Boot and Python microservices.
+•Reduced document analysis time through automated NLP summarization pipelines.
+•Demonstrated microservice-based architecture and API-driven system design.
+Federated Learning for Sleep Apnea Detection
+•Developed privacy-preserving distributed ML model using ECG datasets.
+•Improved diagnostic performance while maintaining cross-institutional data privacy.
+Publications
+A highly sensitive multi-channel SPR-PCF based biosensor with deep learning prediction
+approach
+Alexandria Engineering Journal (Q1, Elsevier)
+A security-friendly privacy-preserving solution for open banking with federated learn-
+ing(Under Review)
+Achieved AUC ¿ 0.97 while preserving cross-institutional privacy.
+Peer Reviewer — Alexandria Engineering Journal (Elsevier)
+Technical Skills
+Programming:Python, Java, C++, SQL, JavaScript
+Frameworks:Spring Boot, Django, React
+AI/ML:Deep Learning, Federated Learning, YOLOv5, TensorFlow, PyTorch, LangChain
+Cloud:AWS (EC2, S3), Docker
+Databases:MySQL
+Tools:Git, REST APIs, Stripe API, Make.com, Postman
+Achievements
+•Solved 1000+ coding problems across LeetCode and competitive programming platforms.
+•Participated in multiple online and onsite programming contests.
+•Question setter for university programming contests and DEF CON CTF.
+Referees
+Available upon request.
