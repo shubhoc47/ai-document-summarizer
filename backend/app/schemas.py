@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class UploadResponse(BaseModel):
     document_id: str
@@ -25,3 +25,29 @@ class SummarizeResponse(BaseModel):
     chunks_used: int
     chunk_size: int
     truncated: bool
+
+class IndexRequest(BaseModel):
+    document_id: str
+
+class IndexResponse(BaseModel):
+    document_id: str
+    chunks_indexed: int
+    chunk_size: int
+    chunk_overlap: int
+
+class AskRequest(BaseModel):
+    document_id: str
+    question: str = Field(min_length=2)
+    top_k: int = 4
+
+class SourceChunk(BaseModel):
+    chunk_id: int
+    score: float | None = None
+    preview: str
+
+class AskResponse(BaseModel):
+    document_id: str
+    question: str
+    answer: str
+    top_k: int
+    sources: list[SourceChunk]

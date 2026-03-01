@@ -9,12 +9,18 @@ from .config import settings
 from .pdf_utils import extract_text_from_pdf  # ✅ ensure your file is named pdf_utils.py
 from .llm_service import summarize_text
 from .utils import ensure_dir, generate_document_id
+from .rag_service import build_and_save_index, answer_question
 from .schemas import (
     UploadResponse,
     ExtractRequest,
     ExtractResponse,
     SummarizeRequest,
-    SummarizeResponse,
+    SummarizeResponse, 
+    IndexRequest, 
+    IndexResponse, 
+    AskRequest, 
+    AskResponse, 
+    SourceChunk
 )
 
 logger = logging.getLogger("app")
@@ -153,6 +159,46 @@ def create_app() -> FastAPI:
         if not p.exists():
             raise HTTPException(status_code=404, detail="Summary not found.")
         return {"document_id": document_id, "summary": p.read_text(encoding="utf-8")}
+    
+    @app.post(f"{settings.API_PREFIX}/index", response_model=IndexResponse)
+    async def index_document(req: IndexRequest):
+        try:
+            chunks_indexed, cfg = build_and_save_index(req.document_id)
+        except FileNotFoundError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Indexing failed: {str(e)}")
+
+        return {
+            "document_id": req.document_id,
+            "chunks_indexed": chunks_indexed,
+            "chunk_size": cfg.chunk_size,
+            "chunk_overlap": cfg.chunk_overlap,
+        }
+
+
+    @app.post(f"{settings.API_PREFIX}/ask", response_model=AskResponse)
+    async def ask_question(req: AskRequest):
+        try:
+            answer, sources = await answer_question(
+                document_id=req.document_id,
+                question=req.question,
+                top_k=req.top_k,
+            )
+        except FileNotFoundError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Ask failed: {str(e)}")
+
+        return {
+            "document_id": req.document_id,
+            "question": req.question,
+            "answer": answer,
+            "top_k": req.top_k,
+            "sources": sources,
+        }
 
     return app
 
