@@ -241,3 +241,17 @@ hr.sep {
 .kValue {
   font-weight: 600;
 }
+
+input[type="text"], input[type="number"] {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: rgba(255,255,255,0.92);
+  outline: none;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+  border-color: rgba(99,102,241,0.8);
+}
+

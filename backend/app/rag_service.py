@@ -110,22 +110,44 @@ async def answer_question(document_id: str, question: str, top_k: int = 4) -> Tu
 
     vs = load_index(document_id)
 
-    # Retrieve relevant chunks
-    docs = vs.similarity_search(question, k=top_k)
+    # ✅ Retrieve relevant chunks WITH scores (FAISS distance; lower = more similar)
+    docs_with_scores = vs.similarity_search_with_score(question, k=top_k)
 
-    # Prepare sources for UI
+    # ---- Low-confidence filter guardrail ----
+    # In FAISS (L2 distance), smaller = better match. Threshold depends on embeddings/model.
+    # Start conservative. If you see too many false negatives, increase it slightly.
+    SCORE_THRESHOLD = 1.2
+
     sources = []
     context_parts = []
-    for d in docs:
+
+    for d, score in docs_with_scores:
+        # Filter out weak matches
+        if score is None:
+            continue
+        if float(score) > SCORE_THRESHOLD:
+            continue
+
         chunk_id = d.metadata.get("chunk_id", -1)
-        content = d.page_content.strip()
-        context_parts.append(f"[Chunk {chunk_id}]\n{content}")
+        content = (d.page_content or "").strip()
+        if not content:
+            continue
+
+        context_parts.append(f"[Chunk {chunk_id} | score={float(score):.3f}]\n{content}")
         sources.append(
             {
                 "chunk_id": int(chunk_id) if chunk_id is not None else -1,
-                "score": None,  # can be added with similarity_search_with_score
+                "score": float(score),
                 "preview": content[:280],
             }
+        )
+
+    # If no chunks passed the threshold, avoid hallucination
+    if not context_parts:
+        return (
+            "I couldn’t find relevant information in the document to answer that question. "
+            "Try rephrasing your question or asking for a specific section/keyword.",
+            [],
         )
 
     context = "\n\n---\n\n".join(context_parts)
@@ -134,13 +156,17 @@ async def answer_question(document_id: str, question: str, top_k: int = 4) -> Tu
 
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("system",
-             "You answer questions using ONLY the provided context. "
-             "If the answer is not in the context, say you don't know and suggest what to search for."),
-            ("human",
-             "Question:\n{question}\n\n"
-             "Context:\n{context}\n\n"
-             "Answer in a clear, helpful way. If relevant, include bullet points."),
+            (
+                "system",
+                "You answer questions using ONLY the provided context. "
+                "If the answer is not in the context, say you don't know.",
+            ),
+            (
+                "human",
+                "Question:\n{question}\n\n"
+                "Context:\n{context}\n\n"
+                "Answer clearly. If helpful, use bullet points.",
+            ),
         ]
     )
 

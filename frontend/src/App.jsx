@@ -94,13 +94,27 @@ export default function App() {
   // Summarize
   const [summarize, setSummarize] = useState({ loading: false, data: null, error: null });
 
+  // RAG Index
+  const [indexing, setIndexing] = useState({ loading: false, data: null, error: null });
+
+  // RAG Ask
+  const [question, setQuestion] = useState("");
+  const [topK, setTopK] = useState(4);
+  const [ask, setAsk] = useState({ loading: false, data: null, error: null });
+
+
   const [fileInputKey, setFileInputKey] = useState(0);
 
   const documentId = upload?.data?.document_id || null;
   const canExtract = Boolean(documentId) && !upload.loading;
   const canSummarize = Boolean(extract?.data?.text_length > 0) && !extract.loading;
 
+  const canIndex = Boolean(extract?.data?.text_length > 0) && !extract.loading;
+  const canAsk = Boolean(indexing?.data?.chunks_indexed > 0) && !indexing.loading;
+
   const pretty = useMemo(() => (obj) => JSON.stringify(obj, null, 2), []);
+
+
 
   // health check on load
   useEffect(() => {
@@ -150,6 +164,10 @@ export default function App() {
       setUpload({ loading: false, data: json, error: null });
       setFileInputKey((k) => k + 1);
       setSelectedFile(null);
+      setIndexing({ loading: false, data: null, error: null });
+      setAsk({ loading: false, data: null, error: null });
+      setQuestion("");
+
     } catch (err) {
       setUpload({ loading: false, data: null, error: err.message || "Upload failed" });
     }
@@ -208,11 +226,83 @@ export default function App() {
     }
   }
 
+    async function handleIndex() {
+    if (!documentId) {
+      setIndexing({ loading: false, data: null, error: "No document_id found. Upload first." });
+      return;
+    }
+
+    setIndexing({ loading: true, data: null, error: null });
+    setAsk({ loading: false, data: null, error: null }); // reset previous ask
+
+    try {
+      const res = await fetch(`${API}/api/index`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ document_id: documentId }),
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.detail || `Index failed (HTTP ${res.status})`);
+
+      setIndexing({ loading: false, data: json, error: null });
+    } catch (err) {
+      setIndexing({ loading: false, data: null, error: err.message || "Index failed" });
+    }
+  }
+
+  async function handleAsk() {
+    if (!documentId) {
+      setAsk({ loading: false, data: null, error: "No document_id found. Upload first." });
+      return;
+    }
+
+    const q = question.trim();
+    if (q.length < 2) {
+      setAsk({ loading: false, data: null, error: "Please type a question." });
+      return;
+    }
+
+    const k = Number(topK);
+    if (!Number.isFinite(k) || k < 1 || k > 10) {
+      setAsk({ loading: false, data: null, error: "top_k must be between 1 and 10." });
+      return;
+    }
+
+    setAsk({ loading: true, data: null, error: null });
+
+    try {
+      const res = await fetch(`${API}/api/ask`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ document_id: documentId, question: q, top_k: k }),
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.detail || `Ask failed (HTTP ${res.status})`);
+
+      setAsk({ loading: false, data: json, error: null });
+    } catch (err) {
+      setAsk({ loading: false, data: null, error: err.message || "Ask failed" });
+    }
+  }
+
+  function scoreLabel(score) {
+    if (score == null) return "—";
+    if (score < 0.6) return "High";
+    if (score < 1.2) return "Medium";
+    return "Low";
+  }
+
   function handleResetAll() {
     setSelectedFile(null);
     setUpload({ loading: false, data: null, error: null });
     setExtract({ loading: false, data: null, error: null });
     setSummarize({ loading: false, data: null, error: null });
+    setIndexing({ loading: false, data: null, error: null });
+    setAsk({ loading: false, data: null, error: null });
+    setQuestion("");
+    setTopK(4);
 
     // ✅ This forces the <input type="file"> to reset (remount)
     setFileInputKey((k) => k + 1);
@@ -278,6 +368,9 @@ export default function App() {
                 setUpload({ loading: false, data: null, error: null });
                 setExtract({ loading: false, data: null, error: null });
                 setSummarize({ loading: false, data: null, error: null });
+                setIndexing({ loading: false, data: null, error: null });
+                setAsk({ loading: false, data: null, error: null });
+                setQuestion("");
               }}
             />
 
@@ -425,6 +518,134 @@ export default function App() {
             </>
           )}
         </div>
+
+                {/* Index (RAG) Card */}
+        <div className="card">
+          <div className="cardHeader">
+            <h2 className="cardTitle">4) Index Document (RAG)</h2>
+            <p className="cardHint">Builds a vector index for semantic search (FAISS)</p>
+          </div>
+
+          <div className="row">
+            <button className="btnPrimary" onClick={handleIndex} disabled={!canIndex || indexing.loading}>
+              {indexing.loading ? "Indexing..." : "Index"}
+            </button>
+          </div>
+
+          {!canIndex && <div className="msg">Run Extract first (and make sure it found text) to enable indexing.</div>}
+
+          {indexing.error && <div className="msg msgBad">❌ {indexing.error}</div>}
+
+          {indexing.data && (
+            <>
+              <div className="msg msgGood">✅ Index created</div>
+
+              <div className="kv">
+                <div className="kLabel">Chunks indexed</div>
+                <div className="kValue">{indexing.data.chunks_indexed}</div>
+                <div className="kLabel">Chunk size</div>
+                <div className="kValue">{indexing.data.chunk_size}</div>
+                <div className="kLabel">Overlap</div>
+                <div className="kValue">{indexing.data.chunk_overlap}</div>
+              </div>
+
+              <hr className="sep" />
+
+              <div className="cardHint">Raw JSON</div>
+              <div className="box">
+                <pre>{pretty(indexing.data)}</pre>
+              </div>
+            </>
+          )}
+        </div>
+
+                {/* Ask (RAG) Card */}
+        <div className="card">
+          <div className="cardHeader">
+            <h2 className="cardTitle">5) Ask Questions (RAG)</h2>
+            <p className="cardHint">Retrieves relevant chunks + answers using Gemini</p>
+          </div>
+
+          <div className="row" style={{ alignItems: "flex-end" }}>
+            <div style={{ flex: 1 }}>
+              <div className="cardHint">Question</div>
+              <input
+                type="text"
+                placeholder="e.g., What are the key points? Any action items?"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                disabled={!canAsk || ask.loading}
+                style={{ width: "100%" }}
+              />
+            </div>
+
+            <div style={{ width: 120 }}>
+              <div className="cardHint">top_k</div>
+              <input
+                type="number"
+                min={1}
+                max={10}
+                value={topK}
+                onChange={(e) => setTopK(e.target.value)}
+                disabled={!canAsk || ask.loading}
+                style={{ width: "100%" }}
+              />
+            </div>
+
+            <button className="btnPrimary" onClick={handleAsk} disabled={!canAsk || ask.loading}>
+              {ask.loading ? "Asking..." : "Ask"}
+            </button>
+          </div>
+
+          {!canAsk && <div className="msg">Run Index first to enable Q&A.</div>}
+
+          {ask.error && <div className="msg msgBad">❌ {ask.error}</div>}
+
+          {ask.data && (
+            <>
+              <div className="msg msgGood">✅ Answer</div>
+
+              <div className="box">
+                <pre style={{ whiteSpace: "pre-wrap" }}>{ask.data.answer}</pre>
+              </div>
+
+              {ask.data.sources?.length > 0 && (
+                <>
+                  <hr className="sep" />
+                  <div className="cardHint">Sources</div>
+
+                  <div className="box">
+                    {ask.data.sources.map((s, idx) => (
+                      <div key={idx} style={{ padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                          <span style={{ fontWeight: 600 }}>Chunk #{s.chunk_id}</span>
+                          <span style={{ opacity: 0.85 }}>
+                            Score: {s.score?.toFixed?.(3) ?? s.score}
+                          </span>
+                          <span style={{ opacity: 0.85 }}>
+                            Relevance: {scoreLabel(s.score)}
+                          </span>
+                        </div>
+
+                        <pre style={{ marginTop: 8, whiteSpace: "pre-wrap", opacity: 0.95 }}>
+                          {s.preview}
+                        </pre>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              <hr className="sep" />
+
+              <div className="cardHint">Raw JSON</div>
+              <div className="box">
+                <pre>{pretty(ask.data)}</pre>
+              </div>
+            </>
+          )}
+        </div>
+        
       </div>
     </div>
   );
