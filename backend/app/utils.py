@@ -10,4 +10,4 @@ def ensure_dir(path: str | Path) -> None:
 	Path(path).mkdir(parents=True, exist_ok=True)
 
 def get_file_size_bytes(file_path: str | Path) -> int:
-	return os.path_getsize(file_path)
+	return os.path.getsize(file_path)
