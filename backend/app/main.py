@@ -1,5 +1,6 @@
+"""FastAPI application entrypoint and route handlers."""
+
 import logging
-import shutil
 from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
@@ -7,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pypdf import PdfReader
 
 from .config import settings
-from .pdf_utils import extract_text_from_pdf  # ✅ ensure your file is named pdf_utils.py
+from .pdf_utils import extract_text_from_pdf
 from .llm_service import summarize_text
 from .utils import ensure_dir, generate_document_id
 from .rag_service import build_and_save_index, answer_question
@@ -21,7 +22,6 @@ from .schemas import (
     IndexResponse, 
     AskRequest, 
     AskResponse, 
-    SourceChunk
 )
 
 logger = logging.getLogger("app")
@@ -29,6 +29,7 @@ MAX_PDF_PAGES = 4
 
 
 def create_app() -> FastAPI:
+    """Create and configure the FastAPI application."""
     app = FastAPI(title=settings.APP_NAME)
 
     app.add_middleware(
@@ -44,11 +45,12 @@ def create_app() -> FastAPI:
 
     @app.get("/health")
     def health():
+        """Simple health endpoint used by frontend startup checks."""
         return {"ok": True, "env": settings.ENV, "app": settings.APP_NAME}
 
     @app.post(f"{settings.API_PREFIX}/upload", response_model=UploadResponse)
     async def upload_pdf(file: UploadFile = File(...)):
-        # Validate content type
+        """Upload a PDF and return a generated document id."""
         if file.content_type not in ("application/pdf", "application/x-pdf"):
             raise HTTPException(status_code=400, detail="Only PDF files are allowed.")
 
@@ -60,11 +62,11 @@ def create_app() -> FastAPI:
         max_bytes = settings.MAX_UPLOAD_MB * 1024 * 1024
         total_bytes = 0
 
-        # Stream write to disk (more memory-safe than await file.read())
+        # Stream to disk to avoid loading full files in memory.
         try:
             with dest_path.open("wb") as f:
                 while True:
-                    chunk = await file.read(1024 * 1024)  # 1MB
+                    chunk = await file.read(1024 * 1024)
                     if not chunk:
                         break
                     total_bytes += len(chunk)
@@ -75,7 +77,6 @@ def create_app() -> FastAPI:
                         )
                     f.write(chunk)
         except HTTPException:
-            # cleanup partial file
             dest_path.unlink(missing_ok=True)
             raise
         except Exception as e:
@@ -86,7 +87,6 @@ def create_app() -> FastAPI:
             dest_path.unlink(missing_ok=True)
             raise HTTPException(status_code=400, detail="Uploaded file is empty.")
 
-        # Hard cap: reject PDFs longer than 4 pages.
         try:
             page_count = len(PdfReader(str(dest_path)).pages)
         except Exception:
@@ -108,6 +108,7 @@ def create_app() -> FastAPI:
 
     @app.post(f"{settings.API_PREFIX}/extract", response_model=ExtractResponse)
     async def extract_text(req: ExtractRequest):
+        """Extract text from an uploaded PDF and persist it for later steps."""
         pdf_path = Path("storage/uploads") / f"{req.document_id}.pdf"
         if not pdf_path.exists():
             raise HTTPException(status_code=404, detail="PDF not found for this document_id.")
@@ -120,7 +121,6 @@ def create_app() -> FastAPI:
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
 
-        # Save extracted text (even if empty? we’ll only save when non-empty)
         if not text:
             return ExtractResponse(
                 document_id=req.document_id,
@@ -143,6 +143,7 @@ def create_app() -> FastAPI:
 
     @app.post(f"{settings.API_PREFIX}/summarize", response_model=SummarizeResponse)
     async def summarize(req: SummarizeRequest):
+        """Generate and persist a summary from previously extracted text."""
         text_path = Path("storage/text") / f"{req.document_id}.txt"
         if not text_path.exists():
             raise HTTPException(
@@ -159,7 +160,6 @@ def create_app() -> FastAPI:
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Summarization failed: {str(e)}")
 
-        # Optional: persist summary
         summary_dir = Path("storage/summary")
         ensure_dir(summary_dir)
         (summary_dir / f"{req.document_id}.md").write_text(summary, encoding="utf-8")
@@ -174,6 +174,7 @@ def create_app() -> FastAPI:
 
     @app.get(f"{settings.API_PREFIX}/summary/{{document_id}}")
     def get_summary(document_id: str):
+        """Fetch a saved summary by document id."""
         p = Path("storage/summary") / f"{document_id}.md"
         if not p.exists():
             raise HTTPException(status_code=404, detail="Summary not found.")
@@ -181,6 +182,7 @@ def create_app() -> FastAPI:
     
     @app.post(f"{settings.API_PREFIX}/index", response_model=IndexResponse)
     async def index_document(req: IndexRequest):
+        """Build and save a FAISS index for a document."""
         try:
             chunks_indexed, cfg = build_and_save_index(req.document_id)
         except FileNotFoundError as e:
@@ -198,6 +200,7 @@ def create_app() -> FastAPI:
 
     @app.post(f"{settings.API_PREFIX}/ask", response_model=AskResponse)
     async def ask_question(req: AskRequest):
+        """Answer a question using the document's vector index."""
         try:
             answer, sources = await answer_question(
                 document_id=req.document_id,

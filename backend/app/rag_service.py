@@ -1,3 +1,5 @@
+"""RAG indexing and question-answering service functions."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -21,12 +23,14 @@ from .llm_service import get_llm
 
 @dataclass
 class RagConfig:
+    """Chunking and retrieval configuration for per-document indexing."""
     chunk_size: int = 900
     chunk_overlap: int = 150
-    max_chunks: int = 2000  # safety guardrail
+    max_chunks: int = 2000
 
 
 def _get_embeddings():
+    """Create Gemini embeddings client used by FAISS."""
     if not settings.GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY is missing in backend/.env")
 
@@ -37,17 +41,19 @@ def _get_embeddings():
 
 
 def _index_dir() -> Path:
+    """Return the base directory where vector indexes are stored."""
     p = Path("storage/index")
     ensure_dir(p)
     return p
 
 
 def _doc_index_path(document_id: str) -> Path:
-    # FAISS saves as a directory (index.faiss + index.pkl)
+    """Return the FAISS directory path for one document."""
     return _index_dir() / document_id
 
 
 def _load_extracted_text(document_id: str) -> str:
+    """Load extracted text for a document, raising if missing."""
     text_path = Path("storage/text") / f"{document_id}.txt"
     if not text_path.exists():
         raise FileNotFoundError("Text not found. Run /api/extract first for this document_id.")
@@ -55,6 +61,7 @@ def _load_extracted_text(document_id: str) -> str:
 
 
 def _chunk_text(text: str, cfg: RagConfig) -> List[Document]:
+    """Split extracted text into LangChain Documents with chunk metadata."""
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=cfg.chunk_size,
         chunk_overlap=cfg.chunk_overlap,
@@ -72,6 +79,7 @@ def _chunk_text(text: str, cfg: RagConfig) -> List[Document]:
 
 
 def build_and_save_index(document_id: str, cfg: RagConfig = RagConfig()) -> Tuple[int, RagConfig]:
+    """Build and persist a FAISS index for a document."""
     text = _load_extracted_text(document_id)
     if not text:
         raise ValueError("Extracted text is empty.")
@@ -89,13 +97,13 @@ def build_and_save_index(document_id: str, cfg: RagConfig = RagConfig()) -> Tupl
 
 
 def load_index(document_id: str) -> FAISS:
+    """Load a previously persisted FAISS index for a document."""
     save_path = _doc_index_path(document_id)
     if not save_path.exists():
         raise FileNotFoundError("Vector index not found. Run /api/index first for this document_id.")
 
     embeddings = _get_embeddings()
 
-    # allow_dangerous_deserialization is required by LangChain when loading pickle metadata
     vs = FAISS.load_local(
         str(save_path),
         embeddings,
@@ -105,24 +113,21 @@ def load_index(document_id: str) -> FAISS:
 
 
 async def answer_question(document_id: str, question: str, top_k: int = 4) -> Tuple[str, list[dict]]:
+    """Answer a question from retrieved chunks and return answer + sources."""
     if top_k < 1 or top_k > 10:
         raise ValueError("top_k must be between 1 and 10.")
 
     vs = load_index(document_id)
 
-    # ✅ Retrieve relevant chunks WITH scores (FAISS distance; lower = more similar)
     docs_with_scores = vs.similarity_search_with_score(question, k=top_k)
 
-    # ---- Low-confidence filter guardrail ----
-    # In FAISS (L2 distance), smaller = better match. Threshold depends on embeddings/model.
-    # Start conservative. If you see too many false negatives, increase it slightly.
+    # FAISS returns L2 distances where lower values are more relevant.
     SCORE_THRESHOLD = 1.2
 
     sources = []
     context_parts = []
 
     for d, score in docs_with_scores:
-        # Filter out weak matches
         if score is None:
             continue
         if float(score) > SCORE_THRESHOLD:
@@ -142,7 +147,6 @@ async def answer_question(document_id: str, question: str, top_k: int = 4) -> Tu
             }
         )
 
-    # If no chunks passed the threshold, avoid hallucination
     if not context_parts:
         return (
             "I couldn’t find relevant information in the document to answer that question. "

@@ -7,26 +7,14 @@ import { CodePanel } from "./components/CodePanel.jsx";
 import { Field, NumberInput, TextInput } from "./components/Field.jsx";
 import { SectionHeader } from "./components/SectionHeader.jsx";
 
-/**
- * Very small "markdown-ish" formatter for your current summary style.
- * It supports:
- * - **Title:** lines as section headers
- * - bullet lines starting with "*" or "-" into <ul>
- */
+/** Normalize summary text before rendering lightweight rich formatting. */
 function cleanSummaryText(text) {
   if (!text) return "";
 
   return text
-    // remove double quotes
     .replace(/"/g, "")
-
-    // remove markdown bold markers **text**
     .replace(/\*\*(.*?)\*\*/g, "$1")
-
-    // remove leading intro sentence if exists
     .replace(/^Here'?s a summary.*?:/i, "")
-
-    // clean multiple blank lines
     .replace(/\n{3,}/g, "\n\n")
 
     .trim();
@@ -60,7 +48,6 @@ function renderSummary(summaryText) {
     const line = lines[i];
     if (!line) continue;
 
-    // Section headers (Key Points, Important Dates, Action Items)
     const headerMatch = line.match(/^(Key Points|Important Dates\/Numbers|Action Items)\s*:?\s*$/i);
     if (headerMatch) {
       flushList();
@@ -72,14 +59,12 @@ function renderSummary(summaryText) {
       continue;
     }
 
-    // Bullet lines
     const bulletMatch = line.match(/^[-•*]\s+(.*)$/);
     if (bulletMatch) {
       currentList.push(bulletMatch[1]);
       continue;
     }
 
-    // Normal text paragraph
     flushList();
       blocks.push(
         <p key={`p-${blocks.length}`} className="text-sm leading-6 text-slate-700">
@@ -96,24 +81,18 @@ function renderSummary(summaryText) {
 export default function App() {
   const API = import.meta.env.VITE_API_BASE_URL;
 
-  // Health check
   const [status, setStatus] = useState({ loading: true, data: null, error: null });
 
-  // Upload
   const [selectedFile, setSelectedFile] = useState(null);
   const [upload, setUpload] = useState({ loading: false, data: null, error: null });
 
-  // Extract
   const [maxPages, setMaxPages] = useState(4);
   const [extract, setExtract] = useState({ loading: false, data: null, error: null });
 
-  // Summarize
   const [summarize, setSummarize] = useState({ loading: false, data: null, error: null });
 
-  // RAG Index
   const [indexing, setIndexing] = useState({ loading: false, data: null, error: null });
 
-  // RAG Ask
   const [question, setQuestion] = useState("");
   const [topK, setTopK] = useState(4);
   const [ask, setAsk] = useState({ loading: false, data: null, error: null });
@@ -132,7 +111,6 @@ export default function App() {
 
 
 
-  // health check on load
   useEffect(() => {
     if (!API) {
       setStatus({ loading: false, data: null, error: "VITE_API_BASE_URL is not set" });
@@ -153,7 +131,6 @@ export default function App() {
   async function handleUpload(e) {
     e.preventDefault();
 
-    // Reset downstream steps when uploading a new file
     setExtract({ loading: false, data: null, error: null });
     setSummarize({ loading: false, data: null, error: null });
 
@@ -249,7 +226,7 @@ export default function App() {
     }
 
     setIndexing({ loading: true, data: null, error: null });
-    setAsk({ loading: false, data: null, error: null }); // reset previous ask
+    setAsk({ loading: false, data: null, error: null });
 
     try {
       const res = await fetch(`${API}/api/index`, {
@@ -320,7 +297,6 @@ export default function App() {
     setQuestion("");
     setTopK(4);
 
-    // ✅ This forces the <input type="file"> to reset (remount)
     setFileInputKey((k) => k + 1);
   }
 

@@ -1,3 +1,5 @@
+"""LLM and summarization helpers."""
+
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -6,6 +8,7 @@ from .config import settings
 
 
 def get_llm():
+    """Return a configured Gemini chat model instance."""
     if not settings.GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY is missing in backend/.env")
 
@@ -17,6 +20,7 @@ def get_llm():
 
 
 def chunk_text(text: str, chunk_size: int, chunk_overlap: int) -> list[str]:
+    """Split long text into overlapping chunks for map-reduce summarization."""
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
@@ -25,15 +29,14 @@ def chunk_text(text: str, chunk_size: int, chunk_overlap: int) -> list[str]:
 
 
 async def summarize_text(text: str) -> tuple[str, dict]:
+    """Summarize extracted text and return `(summary, metadata)`."""
     llm = get_llm()
 
-    # --- Chunking config (Part 7) ---
     CHUNK_SIZE = 6000
     CHUNK_OVERLAP = 400
 
     chunks = chunk_text(text, chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
 
-    # --- Cost guardrail ---
     MAX_CHUNKS = 12
     truncated = len(chunks) > MAX_CHUNKS
     if truncated:
@@ -57,13 +60,11 @@ async def summarize_text(text: str) -> tuple[str, dict]:
         ),
     ])
 
-    # Map: summarize each chunk
     chunk_summaries = []
     for c in chunks:
         res = await (map_prompt | llm).ainvoke({"text": c})
         chunk_summaries.append(res.content.strip())
 
-    # Reduce: combine
     final = await (reduce_prompt | llm).ainvoke({"summaries": "\n\n".join(chunk_summaries)})
     summary = final.content.strip()
 

@@ -1,3 +1,5 @@
+"""PDF text extraction helpers."""
+
 from pathlib import Path
 from typing import Tuple
 from pypdf import PdfReader
@@ -6,13 +8,7 @@ MAX_PDF_PAGES = 4
 
 
 def extract_text_from_pdf(pdf_path: Path, max_pages: int = 30) -> Tuple[str, int]:
-    """
-    Extracts text from a PDF. Returns (text, pages_processed).
-
-    Notes:
-    - For scanned PDFs (image-only), extracted text may be empty.
-    - max_pages protects you from huge PDFs in V1.
-    """
+    """Extract text from a PDF and return `(text, pages_processed)`."""
     if max_pages < 1 or max_pages > MAX_PDF_PAGES:
         raise ValueError(f"max_pages must be between 1 and {MAX_PDF_PAGES}.")
 
@@ -27,7 +23,6 @@ def extract_text_from_pdf(pdf_path: Path, max_pages: int = 30) -> Tuple[str, int
     for i in range(pages_to_read):
         page = reader.pages[i]
         page_text = page.extract_text() or ""
-        # light cleanup
         page_text = page_text.replace("\x00", "").strip()
         if page_text:
             parts.append(page_text)

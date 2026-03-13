@@ -1,0 +1,89 @@
+Shubho Chowdhury  Software Engineer
+0426 110 830 |Sydney, NSW, Australia |shubhoc47@gmail.com |Github 
+Leetcode |LinkedIn 
+PROFESSIONAL PROFILE
+Software Engineer specializing in AI-powered applications, backend systems, and cloud
+infrastructure. Experienced in building production-grade APIs and deploying LLM-based
+systems using FastAPI, LangChain, and AWS.
+SKILLS
+Programming: Python, Java, C++, SQL, JavaScript, TypeScript
+Backend: Spring Boot, Django, REST APIs, Microservices
+Frontend: React, Vite, HTML, CSS, JavaScript
+Cloud & DevOps: AWS (EC2, S3, CloudFront, Route53), Nginx, Linux, Docker
+Databases: MySQL, FAISS (Vector Database)
+AI/ML: LangChain, Retrieval Augmented Generation (RAG), Google Gemini API,Deep
+Learning, Computer Vision, Federated Learning, TensorFlow, PyTorch
+Tools: Git, Make.com, Stripe API
+PROFESSIONAL EXPERIENCE
+Software Engineer
+Beambroadband Pty Ltd 
+•Optimized zero-touch onboarding automation, improving
+workflow reliability by 80%.09/2025 – Present
+Sydney, NSW,
+Australia
+•Engineered automated Stripe–UCRM billing integration, ensuring
+100% financial data accuracy.
+•Developed real-time Xero–UCRM API synchronization,
+eliminating manual invoice reconciliation.
+•Reduced workflow complexity by redesigning automation
+pipelines and API integrations.
+Developer Programmer Intern
+Beambroadband Pty Ltd 
+•Architected end-to-end automation platform integrating Wix, 
+Stripe, and UISP using Make.com  orchestration.07/2025 –
+09/2025
+Sydney, NSW,
+Australia
+•Developed secure frontend-to-backend API communication 
+using JavaScript (Wix Velo).
+•Built Python services integrating multiple REST APIs for 
+automated cross-platform data synchronization.
+Junior Software Engineer
+REEA Digital Limited 
+•Designed and trained YOLOv5 segmentation models, improving 
+accuracy from 85% to 97%.07/2023 –
+01/2024
+Dhaka, Bangladesh
+•Implemented LangChain-based NLP pipelines for AI-driven 
+systems.
+
+•Contributed to ML prototypes using Stable Diffusion and 
+ComfyUI.
+PROJECTS
+AI Document Summarizer with RAG (Production AI System) 
+•Built a full-stack AI document intelligence platform using React (Vite) and FastAPI.
+•Implemented Retrieval Augmented Generation (RAG) using LangChain and FAISS 
+vector search.
+•Integrated Google Gemini LLM to generate summaries and contextual answers from 
+documents.
+•Developed APIs for PDF upload, text extraction, summarization, vector indexing, and 
+AI question answering.
+•Deployed production infrastructure using AWS EC2, Nginx, CloudFront CDN, Route53 
+DNS, and HTTPS with Let's Encrypt.
+Live Demo: app.shubhochowdhury.com 
+Expense-Vision: AI-Powered Receipt & Expense Tracker
+•Built secure full-stack system using Spring Boot, Spring Security, REST APIs, and 
+MySQL.
+•Developed Python AI microservice for OCR-based receipt data extraction.
+•Designed scalable microservice architecture separating authentication, API, and 
+inference services.
+Sleep Apnea with Federated Learning 
+•Developed privacy-preserving distributed ML model using ECG datasets.
+•Implemented federated learning pipeline to enable secure model training without 
+centralized data sharing.
+PUBLICATIONS & PEER REVIEW
+A highly sensitive multi-channel SPR-PCF based biosensor with deep learning 
+prediction approach 
+Chowdhury, S., et al. — Alexandria Engineering Journal (Q1, Elsevier)
+Peer Reviewer — Alexandria Engineering Journal (Elsevier)
+EDUCATION
+Master of Information Technology
+Central Queensland University
+Focus Areas: Software Development and Machine LearningSydney, Australia
+Bachelor of Information Technology
+University of Information Technology and Sciences (UITS)Dhaka, Bangladesh
+ACHIEVEMENTS AND CONTRIBUTIONS
+•Solved 1000+ coding problems across platforms like LeetCode and StopStalk.
+•Participated in multiple online and onsite coding contests, honing problem-solving skills.
+•Set questions for university competitive programming contests and served as a question 
+setter for DEF CON CTF, an international online cybersecurity competition.

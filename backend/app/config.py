@@ -1,7 +1,11 @@
+"""Application settings loaded from environment variables."""
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field
 
+
 class Settings(BaseSettings):
+    """Typed settings model used throughout the backend."""
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     APP_NAME: str = "ai-doc-summarizer"

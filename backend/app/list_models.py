@@ -1,3 +1,5 @@
+"""Utility script to print Gemini models that support embeddings."""
+
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
