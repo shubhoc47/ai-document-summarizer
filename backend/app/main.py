@@ -4,6 +4,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from pypdf import PdfReader
 
 from .config import settings
 from .pdf_utils import extract_text_from_pdf  # ✅ ensure your file is named pdf_utils.py
@@ -24,6 +25,7 @@ from .schemas import (
 )
 
 logger = logging.getLogger("app")
+MAX_PDF_PAGES = 4
 
 
 def create_app() -> FastAPI:
@@ -84,6 +86,20 @@ def create_app() -> FastAPI:
             dest_path.unlink(missing_ok=True)
             raise HTTPException(status_code=400, detail="Uploaded file is empty.")
 
+        # Hard cap: reject PDFs longer than 4 pages.
+        try:
+            page_count = len(PdfReader(str(dest_path)).pages)
+        except Exception:
+            dest_path.unlink(missing_ok=True)
+            raise HTTPException(status_code=400, detail="Invalid or unreadable PDF file.")
+
+        if page_count > MAX_PDF_PAGES:
+            dest_path.unlink(missing_ok=True)
+            raise HTTPException(
+                status_code=400,
+                detail=f"PDF must be {MAX_PDF_PAGES} pages or fewer.",
+            )
+
         return UploadResponse(
             document_id=document_id,
             filename=file.filename,
@@ -96,10 +112,13 @@ def create_app() -> FastAPI:
         if not pdf_path.exists():
             raise HTTPException(status_code=404, detail="PDF not found for this document_id.")
 
-        if req.max_pages < 1 or req.max_pages > 200:
-            raise HTTPException(status_code=400, detail="max_pages must be between 1 and 200.")
+        if req.max_pages < 1 or req.max_pages > MAX_PDF_PAGES:
+            raise HTTPException(status_code=400, detail=f"max_pages must be between 1 and {MAX_PDF_PAGES}.")
 
-        text, pages_processed = extract_text_from_pdf(pdf_path, max_pages=req.max_pages)
+        try:
+            text, pages_processed = extract_text_from_pdf(pdf_path, max_pages=req.max_pages)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
 
         # Save extracted text (even if empty? we’ll only save when non-empty)
         if not text:

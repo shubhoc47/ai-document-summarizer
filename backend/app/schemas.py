@@ -7,7 +7,7 @@ class UploadResponse(BaseModel):
 
 class ExtractRequest(BaseModel):
     document_id: str
-    max_pages: int = 30
+    max_pages: int = Field(default=4, ge=1, le=4)
 
 class ExtractResponse(BaseModel):
     document_id: str
